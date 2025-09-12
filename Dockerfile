@@ -25,13 +25,14 @@ RUN npm install -g \
 		@google/gemini-cli \
 		@anthropic-ai/claude-code \
 		@openai/codex \
+		@qwen-code/qwen-code \
 	&& npm cache clean --force
 
 RUN touch /usr/local/bin/xdg-open \
 	&& chmod +x /usr/local/bin/xdg-open
 
 RUN mkdir -p /workspace && \
-  chown -R node:node /workspace
+	chown -R node:node /workspace
 
 WORKDIR /workspace
 
