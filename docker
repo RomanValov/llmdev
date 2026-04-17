@@ -1,9 +1,28 @@
 #!/bin/sh
 
-exec docker run --rm -it \
-	--env-file $PWD/../.env \
+set -e
+
+ROOT="$(dirname "$(readlink -f "$0")")/.."
+PRJ="$(realpath --relative-to="$HOME" .)"
+
+TTY=
+if test -t 0; then
+	TTY=t
+fi
+
+SRC="./src"
+if ! test -d "$SRC"; then
+	echo "$(readlink -f "$SRC") does not exist"
+	exit 1
+fi
+
+mkdir -p ./llm/claude
+exec docker run --rm -i$TTY \
+	--env-file $ROOT/.env \
 	--network host \
-	-v $PWD:/workspace \
-	-v $PWD/../.llm:/workspace/.llm \
-	-v $PWD/../.home:/home/node \
+	-w /workspace/$PRJ \
+	-v $ROOT/home:/home/node \
+	-v ./src:/workspace/$PRJ/src \
+	-v ./env:/workspace/$PRJ/env \
+	-v ./llm/.claude:/workspace/$PRJ/.claude \
 	local/llmdev "$@"
