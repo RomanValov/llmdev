@@ -1,0 +1,32 @@
+#!/bin/sh
+
+set -eux
+
+ROOT="$(readlink -f "$(dirname "$0")")"
+PRJ="$(realpath --relative-to="$HOME" .)"
+ENV="${DIRENV_ROOT:?}"
+
+exec bwrap \
+	--unshare-all \
+	--share-net \
+	--dev /dev \
+	--proc /proc \
+	--tmpfs /tmp \
+	--ro-bind /usr /usr \
+	--ro-bind /bin /bin \
+	--ro-bind /lib /lib \
+	--ro-bind /lib64 /lib64 \
+	--ro-bind /etc/ssl/certs /etc/ssl/certs \
+	--ro-bind /etc/resolv.conf /etc/resolv.conf \
+	--ro-bind /run/systemd/resolve /run/systemd/resolve \
+	--ro-bind /etc/alternatives /etc/alternatives \
+	--bind "$ROOT/home" "$HOME" \
+	--bind "$ROOT/node_modules" "$ROOT/node_modules" \
+	--dir "$ENV" \
+	--bind-try "$ENV/env" "$ENV/env" \
+	--bind-try "$ENV/src" "$ENV/src" \
+	--bind-try "$ENV/llm/.claude" "$ENV/src/.claude" \
+	--bind-try "$ENV/llm/.codex" "$ENV/src/.codex" \
+	--chdir "$PWD" \
+	--setenv "VISUAL" "vim" \
+	"$@"

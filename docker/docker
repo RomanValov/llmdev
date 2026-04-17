@@ -17,8 +17,8 @@ if ! test -d "$SRC"; then
 fi
 
 mkdir -p ./llm/claude
+#	--env-file $ROOT/.env \
 exec docker run --rm -i$TTY \
-	--env-file $ROOT/.env \
 	--network host \
 	-w /workspace/$PRJ \
 	-v $ROOT/home:/home/node \
