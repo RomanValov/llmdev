@@ -1,0 +1,19 @@
+model = "gpt-5.5"
+model_reasoning_effort = "xhigh"
+personality = "pragmatic"
+# profile = "yolo"
+
+approval_policy = "never"
+sandbox_mode = "danger-full-access"
+
+project_root_markers = [".codex"]
+
+[features]
+memories = true
+
+[plugins."github@openai-curated"]
+enabled = true
+
+[tui]
+theme = "coldark-dark"
+status_line = ["run-state", "model-with-reasoning", "current-dir", "used-tokens", "five-hour-limit", "weekly-limit", "context-used"]
