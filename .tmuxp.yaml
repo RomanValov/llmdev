@@ -1,0 +1,14 @@
+session_name: llmdev
+start_directory: .
+shell_command_before:
+  - export PATH="$(pwd)/bin:$PATH"
+  - cd $PWD
+windows:
+  - window_name: llmdev
+    layout: even-horizontal
+    suppress_history: false
+    panes:
+      - shell_command:
+          - codex
+      - shell_command:
+          - claude
