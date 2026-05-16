@@ -6,13 +6,6 @@ ROOT="$(readlink -f "$(dirname "$0")")"
 PRJ="$(realpath --relative-to="$HOME" .)"
 ENV="${DIRENV_ROOT:-$PRJ}"
 
-if test "$DIRENV_ROOT" && test -d "$DIRENV_ROOT/llm"; then
-	touch "$DIRENV_ROOT/llm/AGENTS.md"
-	mkdir -p "$DIRENV_ROOT/llm/.codex"
-	ln -sf "$DIRENV_ROOT/llm/AGENTS.md" "$DIRENV_ROOT/llm/CLAUDE.md"
-	mkdir -p "$DIRENV_ROOT/llm/.claude"
-fi
-
 mkdir -p "$ROOT/tmp/$ROOT"
 mkdir -p "$ROOT/tmp/$ENV"
 
@@ -37,12 +30,10 @@ exec bwrap \
 	--bind-try "$ENV/env" "$ENV/env" \
 	--bind-try "$ENV/src" "$ENV/src" \
 	--bind-try "$ENV/tmp" "$ENV/tmp" \
-	--bind-try "$ENV/llm/.skills" "$ENV/.skills" \
-	--bind-try "$ENV/llm/AGENTS.md" "$ENV/AGENTS.md" \
-	--bind-try "$ENV/llm/.codex" "$ENV/.codex" \
-	--bind-try "$ENV/llm/CLAUDE.md" "$ENV/CLAUDE.md" \
+	--bind-try "$ENV/llm/.agents" "$ENV/.agents" \
 	--bind-try "$ENV/llm/.claude" "$ENV/.claude" \
-	--bind-try "$ENV/llm/MEMORY.md" "$ENV/MEMORY.md" \
+	--bind-try "$ENV/llm/.codex" "$ENV/.codex" \
+	--bind-try "$ENV/llm/.agents/AGENTS.md" "$ENV/AGENTS.md" \
 	--chdir "$PWD" \
 	--setenv "VISUAL" "vim" \
 	"$@"
