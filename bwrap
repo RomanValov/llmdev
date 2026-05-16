@@ -4,7 +4,17 @@ set -eux
 
 ROOT="$(readlink -f "$(dirname "$0")")"
 PRJ="$(realpath --relative-to="$HOME" .)"
-ENV="${DIRENV_ROOT:?}"
+ENV="${DIRENV_ROOT:-$PRJ}"
+
+if test "$DIRENV_ROOT" && test -d "$DIRENV_ROOT/llm"; then
+	touch "$DIRENV_ROOT/llm/AGENTS.md"
+	mkdir -p "$DIRENV_ROOT/llm/.codex"
+	ln -sf "$DIRENV_ROOT/llm/AGENTS.md" "$DIRENV_ROOT/llm/CLAUDE.md"
+	mkdir -p "$DIRENV_ROOT/llm/.claude"
+fi
+
+mkdir -p "$ROOT/tmp/$ROOT"
+mkdir -p "$ROOT/tmp/$ENV"
 
 exec bwrap \
 	--unshare-all \
@@ -21,12 +31,18 @@ exec bwrap \
 	--ro-bind /run/systemd/resolve /run/systemd/resolve \
 	--ro-bind /etc/alternatives /etc/alternatives \
 	--bind "$ROOT/home" "$HOME" \
-	--bind "$ROOT/node_modules" "$ROOT/node_modules" \
-	--dir "$ENV" \
+	--bind "$ROOT/tmp/$ROOT" "$ROOT" \
+	--bind "$ROOT/node/node_modules" "$ROOT/node/node_modules" \
+	--bind "$ROOT/tmp/$ENV" "$ENV" \
 	--bind-try "$ENV/env" "$ENV/env" \
 	--bind-try "$ENV/src" "$ENV/src" \
-	--bind-try "$ENV/llm/.claude" "$ENV/src/.claude" \
-	--bind-try "$ENV/llm/.codex" "$ENV/src/.codex" \
+	--bind-try "$ENV/tmp" "$ENV/tmp" \
+	--bind-try "$ENV/llm/.skills" "$ENV/.skills" \
+	--bind-try "$ENV/llm/AGENTS.md" "$ENV/AGENTS.md" \
+	--bind-try "$ENV/llm/.codex" "$ENV/.codex" \
+	--bind-try "$ENV/llm/CLAUDE.md" "$ENV/CLAUDE.md" \
+	--bind-try "$ENV/llm/.claude" "$ENV/.claude" \
+	--bind-try "$ENV/llm/MEMORY.md" "$ENV/MEMORY.md" \
 	--chdir "$PWD" \
 	--setenv "VISUAL" "vim" \
 	"$@"
