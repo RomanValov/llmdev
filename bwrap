@@ -3,7 +3,7 @@
 set -eux
 
 ROOT="$(readlink -f "$(dirname "$0")")"
-PRJ="$(realpath --relative-to="$HOME" .)"
+PRJ="$(realpath --relative-to="$HOME" "$PWD")"
 ENV="${DIRENV_ROOT:-$PRJ}"
 
 mkdir -p "$ROOT/tmp/$ROOT"
@@ -34,6 +34,7 @@ exec bwrap \
 	--bind-try "$ENV/llm/.claude" "$ENV/.claude" \
 	--bind-try "$ENV/llm/.codex" "$ENV/.codex" \
 	--bind-try "$ENV/llm/.agents/AGENTS.md" "$ENV/AGENTS.md" \
+	--bind "$PWD" "$PWD" \
 	--chdir "$PWD" \
 	--setenv "VISUAL" "vim" \
 	"$@"
