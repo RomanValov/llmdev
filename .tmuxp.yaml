@@ -8,7 +8,5 @@ windows:
     layout: even-horizontal
     suppress_history: false
     panes:
-      - shell_command:
-          - codex
-      - shell_command:
-          - claude
+      -
+      -
