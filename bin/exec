@@ -3,4 +3,6 @@
 ROOT="$(readlink -f "$(dirname "$(readlink -f "$0")")/..")"
 NAME="$(basename "$0")"
 
-"$ROOT/bwrap" "$ROOT/node/node_modules/.bin/$NAME" "$@"
+export AISLUG="$NAME"
+
+exec "$ROOT/bwrap" "$ROOT/node/node_modules/.bin/$NAME" "$@"

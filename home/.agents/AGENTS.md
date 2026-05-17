@@ -2,12 +2,8 @@
 
 prompts may contain following variables. expand them:
 
-%agent -- current agent slug.
+%agent -- current agent slug (use env var `$AISLUG`).
 %wsroot -- top level project root / workspace (use env var `$WSROOT`).
-
-example of project slugs:
- * OpenAI Codex: `codex`
- * Anthropic Claude: `claude`
 
 # dirs:
 
