@@ -1,0 +1,16 @@
+#!/bin/sh
+
+mkdir -p ./llm/.agents/skills
+touch ./llm/.agents/AGENTS.md
+
+mkdir -p ./llm/.claude
+cd ./llm/.claude
+ln -sf ../.agents/AGENTS.md ./CLAUDE.md
+ln -sf ../.agents/skills ./skills
+cd -
+
+mkdir -p ./llm/.codex
+cd ./llm/.codex
+ln -sf ../.agents/AGENTS.md ./AGENTS.md
+ln -sf ../.agents/skills ./skills
+cd -
