@@ -17,12 +17,21 @@ following directories may be used on purpose (if available):
 
 # rule:
 
-unless asked by user do not change content of `%wsroot/src` directory.
-there could be multiple agents running in parallel and `%wsroot/src` is considered as read-only reference then.
-worktrees could be created at `%wsroot/wip`, i.e. `%wsroot/wip/%agent` or `%wsroot/wip/<name>.%agent`.
+unless asked by the user do not alter/change content and state of shared directories: `%wsroot/src` / `%wsroot/env` / `%wsroot/var`.
+there could be multiple agents running in parallel and the directories should be strictly considered as read-only.
+in particular:
+ - dont modify source in %wsroot/src repo
+ - dont install editable packages into venv
 
 # rule:
 
-for non-primary project sources (for trees at `%wsroot/wip`):
-do not use editable installs. rely on PATH/PYTHONPATH to run executables/tests
-to avoid conflicts in shared python virtual environment. it is okay to install 3rd-party dependencies though.
+following directories may be freely used by agents on their purposes:
+
+ - %wsroot/wip/%agent/...           - make worktrees/clones as needed and commit into
+ - %wsroot/tmp/llmdev/%agent/...    - may be used to keep arbitrary artifacts/state
+
+created branches should follow `%agent/<name>` pattern. worktree for the branch is `%wsroot/wip/%agent/<name>`.
+
+# rule:
+
+when serving artifacts or applications use local net hostname/interface.
