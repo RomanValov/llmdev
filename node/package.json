@@ -13,7 +13,15 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@earendil-works/pi-coding-agent": "latest",
     "@anthropic-ai/claude-code": "latest",
-    "@openai/codex": "latest"
+    "@openai/codex": "latest",
+    "opencode-ai": "latest"
+  },
+  "allowScripts": {
+    "@anthropic-ai/claude-code": true,
+    "@google/genai": true,
+    "opencode-ai": true,
+    "protobufjs": false
   }
 }

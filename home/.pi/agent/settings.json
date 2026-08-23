@@ -1,0 +1,23 @@
+{
+  "lastChangelogVersion": "0.84.2",
+  "theme": "dark",
+  "defaultProvider": "opencode",
+  "defaultModel": "deepseek-v4-flash",
+  "defaultThinkingLevel": "high",
+  "compaction": {
+    "enabled": false
+  },
+  "enableSkillCommands": true,
+  "terminal": {
+    "showTerminalProgress": true
+  },
+  "transport": "auto",
+  "hideThinkingBlock": false,
+  "doubleEscapeAction": "tree",
+  "treeFilterMode": "default",
+  "tuiMode": "regular",
+  "packages": [
+    "npm:@dietrichgebert/ponytail",
+    "npm:pi-caveman"
+  ]
+}

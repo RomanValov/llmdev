@@ -34,4 +34,9 @@ created branches should follow `%agent/<name>` pattern. worktree for the branch 
 
 # rule:
 
+if `.pre-commit-config.yaml` is present. use `pre-commit` to run lints. it is required to activate virtual environment prior to `pre-commit` run.
+not just invoke `%wsroot/env/bin/pre-commit`. it is required to make sure commands running from pre-commit configuration use virtual environment.
+
+# rule:
+
 when serving artifacts or applications use local net hostname/interface.

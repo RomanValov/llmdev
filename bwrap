@@ -31,6 +31,7 @@ exec bwrap \
 	--bind-try "$ENV/src" "$ENV/src" \
 	--bind-try "$ENV/tmp" "$ENV/tmp" \
 	--bind-try "$ENV/wip" "$ENV/wip" \
+	--bind-try "$ENV/lib" "$ENV/lib" \
 	--bind-try "$ENV/llm/.agents" "$ENV/.agents" \
 	--bind-try "$ENV/llm/.claude" "$ENV/.claude" \
 	--bind-try "$ENV/llm/.codex" "$ENV/.codex" \

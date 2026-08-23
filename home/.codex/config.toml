@@ -15,5 +15,5 @@ memories = true
 enabled = true
 
 [tui]
-theme = "coldark-dark"
+theme = "dracula"
 status_line = ["run-state", "model-with-reasoning", "current-dir", "used-tokens", "five-hour-limit", "weekly-limit", "context-used"]
