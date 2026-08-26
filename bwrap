@@ -1,46 +1,98 @@
-#!/bin/sh
+#!/bin/bash
 
 set -eu
 
-ROOT="$(readlink -f "$(dirname "$0")")"
-PRJ="$(realpath --relative-to="$HOME" "$PWD")"
-ENV="${DIRENV_ROOT:-$PRJ}"
+ENV="$(readlink -f "$(dirname "$0")")"
+DIR="$(realpath --relative-to="$HOME" "$PWD")"
+DIR="${DIRENV_ROOT:-$DIR}"
 
-mkdir -p "$ROOT/tmp/$ROOT"
-mkdir -p "$ROOT/tmp/$ENV"
+OPTS=(
+	--die-with-parent
+	--unshare-all
+	--share-net
+	--dev /dev
+	--proc /proc
+	--tmpfs /tmp
+	--bind "$ENV/home" "$HOME"
+	--tmpfs "$ENV"
+	--tmpfs "$DIR"
+)
 
-exec bwrap \
-	--die-with-parent \
-	--unshare-all \
-	--share-net \
-	--dev /dev \
-	--proc /proc \
-	--tmpfs /tmp \
-	--ro-bind /usr /usr \
-	--ro-bind /bin /bin \
-	--ro-bind /lib /lib \
-	--ro-bind /lib64 /lib64 \
-	--ro-bind /etc/ssl/certs /etc/ssl/certs \
-	--ro-bind /etc/resolv.conf /etc/resolv.conf \
-	--ro-bind /run/systemd/resolve /run/systemd/resolve \
-	--ro-bind /etc/alternatives /etc/alternatives \
-	--bind "$ROOT/home" "$HOME" \
-	--bind "$ROOT/tmp/$ROOT" "$ROOT" \
-	--bind "$ROOT/node/node_modules" "$ROOT/node/node_modules" \
-	--bind "$ROOT/venv/" "$ROOT/venv" \
-	--bind "$ROOT/go/" "$ROOT/go" \
-	--bind "$ROOT/tmp/$ENV" "$ENV" \
-	--bind-try "$ENV/env" "$ENV/env" \
-	--bind-try "$ENV/src" "$ENV/src" \
-	--bind-try "$ENV/tmp" "$ENV/tmp" \
-	--bind-try "$ENV/wip" "$ENV/wip" \
-	--bind-try "$ENV/lib" "$ENV/lib" \
-	--bind-try "$ENV/llm/.agents" "$ENV/.agents" \
-	--bind-try "$ENV/llm/.claude" "$ENV/.claude" \
-	--bind-try "$ENV/llm/.codex" "$ENV/.codex" \
-	--bind-try "$ENV/llm/.agents/AGENTS.md" "$ENV/AGENTS.md" \
-	--bind "$PWD" "$PWD" \
-	--chdir "$PWD" \
-	--setenv "WSROOT" "$ENV" \
-	--setenv "VISUAL" "vim" \
-	"$@"
+SYSPATHS=(
+	/usr
+	/bin
+	/lib
+	/lib64
+	/etc/ssl/certs
+	/etc/resolv.conf
+	/run/systemd/resolve
+	/etc/alternatives
+	/etc/bash.bashrc
+	/etc/profile
+	/etc/passwd
+	/etc/group
+)
+
+for syspath in "${SYSPATHS[@]}"; do
+	OPTS+=(--ro-bind "$syspath" "$syspath")
+done
+
+shopt -s dotglob nullglob
+for skelpath in /etc/skel/*; do
+	OPTS+=(--ro-bind "$skelpath" "$HOME/$(basename "$skelpath")")
+done
+shopt -u dotglob nullglob
+
+ENVPATHS=(
+	node
+	venv
+	go
+	dist
+)
+
+for envpath in "${ENVPATHS[@]}"; do
+	OPTS+=(--ro-bind-try "$ENV/$envpath" "$ENV/$envpath")
+	PATH="$ENV/$envpath/bin:$PATH"
+done
+
+DIRPATHS=(
+	env
+	src
+	tmp
+	wip
+	lib
+)
+
+LLMPATHS=(
+	.agents
+	.claude
+	.codex
+	AGENTS.md
+)
+
+if test "${DIRENV_ROOT:-}"; then
+	for dirpath in "${DIRPATHS[@]}"; do
+		OPTS+=(--bind-try "$DIR/$dirpath" "$DIR/$dirpath")
+	done
+
+	for llmpath in "${LLMPATHS[@]}"; do
+		OPTS+=(--bind-try "$DIR/llm/$llmpath" "$DIR/$llmpath")
+	done
+else
+	OPTS+=(--bind "$PWD" "$PWD")
+fi
+
+OPTS+=(
+	--chdir "$PWD"
+	--setenv "WSROOT" "$DIR"
+	--setenv "PATH" "$PATH"
+	--setenv "VISUAL" "vim"
+)
+
+
+if ! test "$*"; then
+	set -- "$SHELL"
+fi
+
+echo "enter"
+exec bwrap "${OPTS[@]}" -- "$@"

@@ -2,6 +2,7 @@
 
 mkdir -p ./llm/.agents/skills
 touch ./llm/.agents/AGENTS.md
+ln -sf ./.agents/AGENTS.md ./AGENTS.md
 
 mkdir -p ./llm/.claude
 cd ./llm/.claude

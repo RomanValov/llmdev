@@ -1,10 +1,10 @@
-session_name: llmdev
-start_directory: .
-shell_command_before:
-  - export PATH="$(pwd)/bin:$PATH"
-  - cd $PWD
+session_name: llm_${DIRENV_NAME}
+start_directory: ${PWD}
+options:
+  default-command: ~/llmdev/bwrap
+  status-style: "bg=blue"
 windows:
-  - window_name: llmdev
+  - window_name: llm_${DIRENV_NAME}
     layout: even-horizontal
     suppress_history: false
     panes:
