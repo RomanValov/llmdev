@@ -1,6 +1,6 @@
 {
+  "agentMode": "accept-edits",
   "colorScheme": "dark",
   "enableTelemetry": false,
-  "agentMode": "accept-edits",
   "toolPermission": "always-proceed"
 }

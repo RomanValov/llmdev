@@ -13,10 +13,14 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@earendil-works/pi-coding-agent": "latest",
     "@anthropic-ai/claude-code": "latest",
+    "@apify/mcpc": "latest",
+    "@earendil-works/pi-coding-agent": "latest",
+    "@google/gemini-cli": "latest",
     "@openai/codex": "latest",
-    "opencode-ai": "latest"
+    "mcp-cli": "github:philschmid/mcp-cli",
+    "opencode-ai": "latest",
+    "bun": "latest"
   },
   "allowScripts": {
     "@anthropic-ai/claude-code": true,

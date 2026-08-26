@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -eux
+set -eu
 
 ROOT="$(readlink -f "$(dirname "$0")")"
 PRJ="$(realpath --relative-to="$HOME" "$PWD")"
@@ -10,6 +10,7 @@ mkdir -p "$ROOT/tmp/$ROOT"
 mkdir -p "$ROOT/tmp/$ENV"
 
 exec bwrap \
+	--die-with-parent \
 	--unshare-all \
 	--share-net \
 	--dev /dev \
@@ -26,6 +27,8 @@ exec bwrap \
 	--bind "$ROOT/home" "$HOME" \
 	--bind "$ROOT/tmp/$ROOT" "$ROOT" \
 	--bind "$ROOT/node/node_modules" "$ROOT/node/node_modules" \
+	--bind "$ROOT/venv/" "$ROOT/venv" \
+	--bind "$ROOT/go/" "$ROOT/go" \
 	--bind "$ROOT/tmp/$ENV" "$ENV" \
 	--bind-try "$ENV/env" "$ENV/env" \
 	--bind-try "$ENV/src" "$ENV/src" \

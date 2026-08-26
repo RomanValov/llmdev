@@ -1,8 +1,13 @@
 #!/bin/sh
 
+set -eu
+
 ROOT="$(readlink -f "$(dirname "$(readlink -f "$0")")/..")"
 NAME="$(basename "$0")"
 
 export AISLUG="$NAME"
 
-exec "$ROOT/bwrap" "$ROOT/node/node_modules/.bin/$NAME" "$@"
+PATH="$ROOT/node/node_modules/.bin:$ROOT/venv/bin:$PATH:$ROOT/go/bin"
+EXEC="$(PATH=$PATH which "$NAME")"
+
+exec "$ROOT/bwrap" "$EXEC" "$@"
