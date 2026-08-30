@@ -3,8 +3,7 @@
 set -eu
 
 ENV="$(readlink -f "$(dirname "$0")")"
-DIR="$(realpath --relative-to="$HOME" "$PWD")"
-DIR="${DIRENV_ROOT:-$DIR}"
+DIR="${DIRENV_ROOT:-$PWD}"
 TAG="${DIRENV_NAME:-$(basename "$DIR")}"
 
 OPTS=(
