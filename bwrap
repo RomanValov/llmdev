@@ -5,6 +5,7 @@ set -eu
 ENV="$(readlink -f "$(dirname "$0")")"
 DIR="$(realpath --relative-to="$HOME" "$PWD")"
 DIR="${DIRENV_ROOT:-$DIR}"
+TAG="${DIRENV_NAME:-$(basename "$DIR")}"
 
 OPTS=(
 	--die-with-parent
@@ -55,6 +56,8 @@ for envpath in "${ENVPATHS[@]}"; do
 	PATH="$ENV/$envpath/bin:$PATH"
 done
 
+OPTS+=(--bind "$ENV/www" "$ENV/www")
+
 DIRPATHS=(
 	env
 	src
@@ -84,7 +87,8 @@ fi
 
 OPTS+=(
 	--chdir "$PWD"
-	--setenv "WSROOT" "$DIR"
+	--setenv "WSDIR" "$DIR"
+	--setenv "WSTAG" "$TAG"
 	--setenv "PATH" "$PATH"
 	--setenv "VISUAL" "vim"
 )

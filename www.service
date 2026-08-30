@@ -1,0 +1,13 @@
+[Unit]
+Description=llmdev www serve
+After=network.target
+
+[Service]
+Type=exec
+WorkingDirectory=%h/llmdev/www
+#ExecStart=/usr/bin/caddy file-server --browse --listen :8000
+ExecStart=/usr/sbin/mini_httpd -D -p 8000 -d .
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
