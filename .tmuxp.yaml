@@ -1,12 +1,10 @@
-session_name: llm_${DIRENV_NAME}
+session_name: llm_${WSTAG}
 start_directory: ${PWD}
 options:
-  default-command: ~/llmdev/bwrap
+  default-command: "PROMPT_COMMAND='unset PROMPT_COMMAND; exec $HOME/llmdev/bwrap' exec bash -li"
   status-style: "bg=blue"
 windows:
-  - window_name: llm_${DIRENV_NAME}
+  - window_name: llm_${WSTAG}
     layout: even-horizontal
     suppress_history: false
-    panes:
-      -
-      -
+    panes: [null, null]

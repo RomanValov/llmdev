@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -eu
+
+ENV="$(readlink -f "$(dirname "$0")")"
+DIR="${DIRENV_ROOT:-$PWD}"
+TAG="${DIRENV_NAME:-$(basename "$DIR")}"
+
+WSTAG=$TAG WSDIR=$DIR exec tmuxp load -y "$ENV"
