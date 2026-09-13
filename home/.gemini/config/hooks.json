@@ -1,0 +1,15 @@
+{
+  "vars": {
+    "enabled": true,
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "exec ~/.agents/hooks/vars.sh"
+      }
+    ],
+    "PostInvocation": null,
+    "Stop": null,
+    "PreToolUse": null,
+    "PostToolUse": null
+  }
+}
