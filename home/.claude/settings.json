@@ -9,6 +9,24 @@
     "type": "command",
     "command": "bash ~/.claude/statusline-command.sh"
   },
+  "enabledPlugins": {
+    "ponytail@ponytail": true,
+    "caveman@caveman": false
+  },
+  "extraKnownMarketplaces": {
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
+    },
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
+      }
+    }
+  },
   "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
   "tui": "default",

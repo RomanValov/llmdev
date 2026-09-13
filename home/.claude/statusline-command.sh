@@ -50,5 +50,15 @@ if [ -n "$cost_usd" ]; then
     parts="$parts$CYAN \$${cost_usd_fmt}$RESET"
 fi
 
+caveman="$(bash ~/.claude/plugins/marketplaces/caveman/src/hooks/caveman-statusline.sh)"
+if [ -n "$caveman" ]; then
+	parts="$parts $caveman"
+fi
+
+ponytail="$(bash ~/.claude/plugins/marketplaces/ponytail/hooks/ponytail-statusline.sh)"
+if [ -n "$ponytail" ]; then
+	parts="$parts $ponytail"
+fi
+
 #printf '%s\n' "$parts"
 echo -ne "$parts"
