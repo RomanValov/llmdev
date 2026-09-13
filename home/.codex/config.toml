@@ -14,6 +14,20 @@ memories = true
 [plugins."github@openai-curated"]
 enabled = true
 
+[plugins."ponytail@ponytail"]
+enabled = true
+
+[plugins."caveman@caveman"]
+enabled = false
+
 [tui]
 theme = "dracula"
 status_line = ["run-state", "model-with-reasoning", "current-dir", "used-tokens", "five-hour-limit", "weekly-limit", "context-used"]
+
+[marketplaces.caveman]
+source_type = "git"
+source = "https://github.com/JuliusBrussee/caveman.git"
+
+[marketplaces.ponytail]
+source_type = "git"
+source = "https://github.com/DietrichGebert/ponytail.git"
