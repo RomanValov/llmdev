@@ -55,6 +55,7 @@ for envpath in "${ENVPATHS[@]}"; do
 	PATH="$ENV/$envpath/bin:$PATH"
 done
 
+OPTS+=(--bind "$ENV/tmp" "$ENV/tmp")
 OPTS+=(--bind "$ENV/www" "$ENV/www")
 
 DIRPATHS=(
