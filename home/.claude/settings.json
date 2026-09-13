@@ -7,7 +7,19 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "bash ~/.claude/statusline-command.sh"
+    "command": "exec ~/.claude/statusline-command.sh"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "exec ~/.agents/hooks/vars.sh"
+          }
+        ]
+      }
+    ]
   },
   "enabledPlugins": {
     "ponytail@ponytail": true,
