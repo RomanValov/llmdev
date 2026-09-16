@@ -4,6 +4,6 @@ set -eu
 
 ENV="$(readlink -f "$(dirname "$0")")"
 DIR="${DIRENV_ROOT:-$PWD}"
-TAG="${DIRENV_NAME:-$(basename "$DIR")}"
+TAG="$(realpath --relative-base "$HOME" "$DIR")"
 
 WSTAG=$TAG WSDIR=$DIR exec tmuxp load -y "$ENV"
