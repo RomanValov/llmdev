@@ -1,0 +1,85 @@
+#!/bin/bash
+
+set -eu
+
+source "$(dirname "$(realpath "$0")")/common.sh"
+
+
+json() {
+	FILE=$1
+	shift 1
+
+	jq "$(IFS='|'; echo "$*")" < "$FILE" > "$FILE.tmp"
+	mv "$FILE.tmp" "$FILE"
+}
+
+
+toml() {
+	FILE=$1
+	shift 1
+
+	tomlq -T "$(IFS='|'; echo "$*")" < "$FILE" > "$FILE.tmp"
+	mv "$FILE.tmp" "$FILE"
+}
+
+
+json "$ENV/home/.claude/settings.json" \
+	'.env.DISABLE_UPDATES = "true"' \
+	'.permissions.defaultMode = "bypassPermissions"' \
+	'.skipDangerousModePermissionPrompt = true' \
+	'.promptSuggestionEnabled = false' \
+	'.alwaysThinkingEnabled = true' \
+	'.switchModelsOnFlag = false' \
+	'.autoMemoryEnabled = false' \
+	'.fileCheckpointingEnabled = false' \
+	'.autoCompactEnabled = false' \
+	'.cleanupPeriodDays = 3650' \
+	'.remoteControlAtStartup = false' \
+	'.disableAgentView = true' \
+	'.enableArtifact = false' \
+	'.tui = "default"' \
+	'.statusLine = {type: "command", command: "exec ~/.claude/statusline-command.sh"}' \
+	'.hooks.SessionStart = [{hooks: [{type: "command", command: "exec ~/.agents/hooks/vars.sh"}]}]' \
+	.
+
+json "$ENV/home/.claude/settings.json" \
+	'.extraKnownMarketplaces.ponytail = {source: {source: "github", repo: "DietrichGebert/ponytail"}}' \
+	'.enabledPlugins."ponytail@ponytail" = true' \
+	'.extraKnownMarketplaces.caveman = {source: {source: "github", repo: "JuliusBrussee/caveman"}}' \
+	'.enabledPlugins."caveman@caveman" = false' \
+	.
+
+
+json "$ENV/home/.gemini/antigravity-cli/settings.json" \
+	'.toolPermission = "always-proceed"' \
+	.
+
+
+json "$ENV/home/.pi/agent/settings.json" \
+	'.compaction.enabled = false' \
+	'.terminal.showTerminalProgress = true' \
+	'.doubleEscapeAction = "fork"' \
+	'del(.packages)' \
+	'.packages += ["npm:@dietrichgebert/ponytail"]' \
+	'.packages += ["npm:pi-caveman"]' \
+	'.packages += ["npm:pi-yaml-hooks"]' \
+	'.packages += ["npm:@zigai/pi-prompt-history"]' \
+	.
+
+
+toml "$ENV/home/.codex/config.toml" \
+	'.approval_policy = "never"' \
+	'.sandbox_mode = "danger-full-access"' \
+	'.project_root_markers = [".codex"]' \
+	'.features.memories = false' \
+	'.tui.theme = "dracula"' \
+	'.tui.status_line = ["run-state", "model-with-reasoning", "current-dir", "five-hour-limit", "weekly-limit", "context-used"]' \
+	.
+
+
+toml "$ENV/home/.codex/config.toml" \
+	'.marketplaces.ponytail = {source_type: "git", source: "https://github.com/DietrichGebert/ponytail.git"}' \
+	'.plugins."ponytail@ponytail".enabled = true' \
+	'.marketplaces.caveman = {source_type: "git", source: "https://github.com/JuliusBrussee/caveman.git"}' \
+	'.plugins."caveman@caveman".enabled = false' \
+	.
