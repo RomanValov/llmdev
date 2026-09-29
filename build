@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -eu
+
+source "$(dirname "$(realpath "$0")")/common.sh"
+
+pushd "$ENV/node"
+if test "$(npm outdated | cat | tee /dev/stderr)"; then
+	npm update
+fi
+popd
+
+pushd "$ENV/dist/bin"
+./agy update
+./cursor update
+popd

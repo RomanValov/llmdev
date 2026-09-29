@@ -19,9 +19,10 @@
     "@github/copilot": "latest",
     "@google/gemini-cli": "latest",
     "@openai/codex": "latest",
+    "bun": "latest",
     "mcp-cli": "github:philschmid/mcp-cli",
     "opencode-ai": "latest",
-    "bun": "latest"
+    "playwright": "latest"
   },
   "allowScripts": {
     "@anthropic-ai/claude-code": true,
