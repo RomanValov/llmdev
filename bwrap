@@ -62,14 +62,13 @@ DIRPATHS=(
 	env
 	src
 	tmp
-	wip
 	lib
+	wip
+	llm
 )
 
 LLMPATHS=(
 	.agents
-	.claude
-	.codex
 	AGENTS.md
 )
 
@@ -79,7 +78,7 @@ if test "${DIRENV_ROOT:-}"; then
 	done
 
 	for llmpath in "${LLMPATHS[@]}"; do
-		OPTS+=(--bind-try "$DIR/llm/$llmpath" "$DIR/$llmpath")
+		OPTS+=(--bind-try "$DIR/$llmpath" "$DIR/$llmpath")
 	done
 else
 	OPTS+=(--bind "$PWD" "$PWD")

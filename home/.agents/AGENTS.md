@@ -14,9 +14,10 @@ following directories may be used on purpose (if available):
 
 * %wsdir/env -- python virtual environment to use.
 * %wsdir/src -- primary project source / project dir.
-* %wsdir/wip -- alternative clones and git worktrees.
-* %wsdir/tmp -- directory for drafts, scratches, probes, helpers and artifacts.
+* %wsdir/tmp -- directory for non primary user artifacts.
 * %wsdir/var -- directory for state persistence such as databases.
+* %wsdir/wip -- alternative clones and git worktrees.
+* %wsdir/llm -- directory for state and artifacats managed by agents.
 
 ## rule:1
 
@@ -36,9 +37,9 @@ in particular:
 
 following directories may be freely used by agents on their purposes:
 
-* %wsdir/wip/%agent/...            - make worktrees/clones as needed and commit into
-* %wsdir/tmp/llmdev/%agent/...     - may be used to keep arbitrary artifacts/state
-* ~/llmdev/www/%wstag/%agent/...   - may be used to keep html reports (dir is served)
+* %wsdir/wip/%agent/...             -- make worktrees/clones as needed and commit into.
+* %wsdir/llm/%agent/...             -- may be used to keep arbitrary artifacts/state.
+                                       legacy path: %wsdir/tmp/llmdev (files moved).
 
 created branches should follow `%agent/<name>` pattern.
 worktree for the branch is `%wsdir/wip/%agent/<name>`.
