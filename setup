@@ -28,6 +28,9 @@ json "$ENV/home/.claude/settings.json" \
 	'.permissions.defaultMode = "bypassPermissions"' \
 	'.skipDangerousModePermissionPrompt = true' \
 	'.promptSuggestionEnabled = false' \
+	'.showClearContextOnPlanAccept = true' \
+	'.showThinkingSummaries = true' \
+	'.respondToBashCommands = false' \
 	'.alwaysThinkingEnabled = true' \
 	'.switchModelsOnFlag = false' \
 	'.autoMemoryEnabled = false' \
@@ -35,9 +38,12 @@ json "$ENV/home/.claude/settings.json" \
 	'.autoCompactEnabled = false' \
 	'.cleanupPeriodDays = 3650' \
 	'.remoteControlAtStartup = false' \
+	'.disableClaudeAiConnectors = true' \
 	'.disableAgentView = true' \
 	'.enableArtifact = false' \
 	'.tui = "default"' \
+	'.timeFormat = "24-hour"' \
+	'.attribution = {commit: "", pr: "", sessionUrl: false}' \
 	'.statusLine = {type: "command", command: "exec ~/.claude/statusline-command.sh"}' \
 	'.hooks.SessionStart = [{hooks: [{type: "command", command: "exec ~/.agents/hooks/vars.sh"}]}]' \
 	.
@@ -73,6 +79,7 @@ toml "$ENV/home/.codex/config.toml" \
 	'.project_root_markers = [".codex"]' \
 	'.features.memories = false' \
 	'.tui.theme = "dracula"' \
+	'.tui.alternate_screen = "never"' \
 	'.tui.status_line = ["run-state", "model-with-reasoning", "current-dir", "five-hour-limit", "weekly-limit", "context-used"]' \
 	.
 
