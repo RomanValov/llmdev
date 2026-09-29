@@ -42,6 +42,8 @@ done
 shopt -u dotglob nullglob
 
 OPTS+=(--ro-bind-try "$HOME/.Xauthority" "$HOME/.Xauthority")
+OPTS+=(--ro-bind-try "$HOME/.gitconfig" "$HOME/.gitconfig")
+OPTS+=(--ro-bind-try "/tmp/tmux-$UID/" "/tmp/tmux-$UID/")
 
 ENVPATHS=(
 	node
