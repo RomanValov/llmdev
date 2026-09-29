@@ -2,9 +2,7 @@
 
 set -eu
 
-ENV="$(readlink -f "$(dirname "$0")")"
-DIR="${DIRENV_ROOT:-$PWD}"
-TAG="$(realpath --relative-base "$HOME" "$DIR")"
+source "$(dirname "$(realpath "$0")")/common.sh"
 
 OPTS=(
 	--die-with-parent
