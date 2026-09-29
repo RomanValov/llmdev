@@ -51,3 +51,12 @@ it is required to activate virtual environment prior to `pre-commit` run.
 directly running `%wsdir/env/bin/pre-commit` won't work due to `system` config entries.
 file `./pyproject.toml` provides canonical linter configuration for the project.
 take into account when runnings lints for your probes and worktrees.
+
+## rule:4
+
+commit messages should follow rules:
+
+* no attribution;
+* commit messages is exactly 50 letters (action accounted);
+* commit messages consist only of english lowercase characters and spaces (except colon after action);
+* action is initial prefix. could be one of: `add:` / `del:` / `ref:` / `fix:` / `chore:`;
