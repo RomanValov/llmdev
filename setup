@@ -4,10 +4,27 @@ set -eu
 
 source "$(dirname "$(realpath "$0")")/common.sh"
 
+source "$(dirname "$(realpath "$0")")/venv/bin/activate"
+
+
+keep() {
+	FILE=$1
+
+	if test -f "$FILE" -a ! -f "$FILE.bak"; then
+		cp -f "$FILE" "$FILE.bak"
+	fi
+
+	if test ! -f "$FILE" -a -f "$FILE.bak"; then
+		cp -f "$FILE.bak" "$FILE"
+	fi
+}
+
 
 json() {
 	FILE=$1
 	shift 1
+
+	keep "$FILE"
 
 	jq "$(IFS='|'; echo "$*")" < "$FILE" > "$FILE.tmp"
 	mv "$FILE.tmp" "$FILE"
@@ -17,6 +34,8 @@ json() {
 toml() {
 	FILE=$1
 	shift 1
+
+	keep "$FILE"
 
 	tomlq -T "$(IFS='|'; echo "$*")" < "$FILE" > "$FILE.tmp"
 	mv "$FILE.tmp" "$FILE"
