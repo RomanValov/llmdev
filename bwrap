@@ -21,11 +21,20 @@ SYSPATHS=(
 	/bin
 	/lib
 	/lib64
+	/etc/hosts
+	/etc/localtime
 	/etc/ssl/certs
 	/etc/resolv.conf
+	/etc/nsswitch.conf
 	/run/systemd/resolve
+	/etc/manpath.config
 	/etc/alternatives
+	/etc/bash_completion.d
+	/etc/bash_completion
 	/etc/bash.bashrc
+	/etc/locale.conf
+	/etc/vim/vimrc
+	/etc/inputrc
 	/etc/profile
 	/etc/passwd
 	/etc/group
